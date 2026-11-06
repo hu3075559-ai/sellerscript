@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TikTok Shop Hashtag Generator — Tiered Hashtag Sets by Category | SellerScript</title>
+<meta name="description" content="Generate tiered TikTok Shop hashtag sets: broad reach tags, category tags and long-tail niche tags, plus tags built from your product keyword. Free, copy in one click.">
+<link rel="canonical" href="https://sellerscript.pages.dev/hashtag-generator/">
+<meta property="og:title" content="TikTok Shop Hashtag Generator | SellerScript">
+<meta property="og:description" content="Broad + category + niche hashtag tiers for TikTok Shop posts, generated from your category and product keyword.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sellerscript.pages.dev/hashtag-generator/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"TikTok Shop Hashtag Generator","url":"https://sellerscript.pages.dev/hashtag-generator/","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Generates tiered hashtag sets for TikTok Shop product posts by category and product keyword."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How many hashtags should a TikTok Shop post use?","acceptedAnswer":{"@type":"Answer","text":"There is no official number. A practical mix used by many sellers is 10–20 tags: a few broad reach tags, a core of category tags, and several specific niche tags that match the exact product. The generator returns exactly that tiered mix."}},
+{"@type":"Question","name":"Why tier hashtags instead of using only big tags?","acceptedAnswer":{"@type":"Answer","text":"Huge tags like #fyp have billions of views and bury small accounts instantly. Niche and long-tail tags have buyers behind them and far less competition, so a layered set gives both a reach lottery ticket and steady discovery."}},
+{"@type":"Question","name":"Should I reuse the same hashtag set on every post?","acceptedAnswer":{"@type":"Answer","text":"Rotate the niche layer per product and keep the broad layer stable. Posting one identical block forever makes captions look automated; varying the product-specific tags keeps each post matched to its item."}}]}
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="/">Seller<span>Script</span></a>
+  <nav class="main">
+    <a href="/script-generator/">Script Generator</a>
+    <a href="/title-optimizer/">Title Optimizer</a>
+    <a class="on" href="/hashtag-generator/">Hashtags</a>
+    <a href="/banned-words-checker/">Banned Words</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <section class="block">
+    <div class="kicker">Tool 3 · Discovery</div>
+    <h2 style="font-size:32px">TikTok Shop Hashtag Generator</h2>
+    <p style="color:var(--muted);max-width:680px">One tier does not fit all: broad tags chase reach, category tags place you in the right shelf, niche tags reach actual buyers. Pick a category, add your product keyword, get the full layered set.</p>
+
+    <div class="card">
+      <form class="tool" id="tag-form">
+        <div class="row">
+          <div>
+            <label for="h-cat">Product category</label>
+            <select id="h-cat"></select>
+          </div>
+          <div>
+            <label for="h-kw">Product keyword</label>
+            <input type="text" id="h-kw" placeholder="e.g. mini humidifier">
+          </div>
+        </div>
+        <button class="btn" type="submit">Generate hashtags</button>
+      </form>
+
+      <div class="result" id="tag-result">
+        <div id="tag-groups"></div>
+        <h4 style="margin:18px 0 6px">Copy-ready block</h4>
+        <pre class="copybox" id="tag-block"></pre>
+        <button class="btn small" data-copy-target="tag-block">Copy all hashtags</button>
+        <p class="meta-line" id="tag-meta"></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="subscribe">
+    <h2>Get Pro when it launches</h2>
+    <p>Trend-refreshed hashtag sets by category and country, refreshed monthly from what is actually moving. One email at launch.</p>
+    <form class="subscribe" data-source="pro-waitlist-hashtag">
+      <input type="email" required placeholder="you@yourstore.com" aria-label="Email address">
+      <input class="hp" type="text" name="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn" type="submit">Join the waitlist</button>
+      <div class="sub-msg" role="status"></div>
+    </form>
+  </div>
+
+  <section class="block faq">
+    <h2>FAQ</h2>
+    <details><summary>How many hashtags should a post use?</summary><p>No official number exists. A practical mix is 10–20: a few broad tags, a category core, and several product-specific niche tags — exactly what this generator returns.</p></details>
+    <details><summary>Why not just use the biggest tags?</summary><p>Huge tags bury small accounts instantly. Niche tags have buyers behind them and far less competition, so the layered set balances a reach lottery ticket with steady discovery.</p></details>
+    <details><summary>Should I reuse the same set every time?</summary><p>Rotate the niche layer per product; keep the broad layer stable. Identical blocks on every post look automated and mismatch items.</p></details>
+  </section>
+</main>
+
+<footer class="site"><div class="wrap">
+  <span>© 2026 SellerScript</span>
+  <a href="/">All tools</a><a href="/script-generator/">Script Generator</a>
+  <a href="/title-optimizer/">Title Optimizer</a><a href="/banned-words-checker/">Banned Words Checker</a>
+</div>
+<div class="wrap disclaimer">Independent tool site, not affiliated with TikTok or TikTok Shop. Hashtags support discovery; they do not guarantee reach or sales.</div>
+</footer>
+<script src="/assets/tools.js"></script>
+<script src="/assets/site.js"></script>
+<script>
+(function () {
+  var catSel = document.getElementById('h-cat');
+  Object.keys(SSEngines.CATEGORIES).forEach(function (k) {
+    var o = document.createElement('option');
+    o.value = k; o.textContent = SSEngines.CATEGORIES[k].label;
+    catSel.appendChild(o);
+  });
+  function group(title, tags) {
+    if (!tags.length) return null;
+    var d = document.createElement('div'); d.className = 'taggroup';
+    var h = document.createElement('h4'); h.textContent = title; d.appendChild(h);
+    tags.forEach(function (t) {
+      var s = document.createElement('span'); s.className = 'tag'; s.textContent = t; d.appendChild(s);
+    });
+    return d;
+  }
+  document.getElementById('tag-form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var r = SSEngines.hashtagGenerate({
+      category: catSel.value,
+      keyword: document.getElementById('h-kw').value
+    });
+    var box = document.getElementById('tag-groups');
+    box.innerHTML = '';
+    [['Broad · reach', r.broad], ['Category · your shelf', r.mid],
+     ['Niche · buyers', r.niche], ['From your keyword', r.generated]].forEach(function (g) {
+      var el = group(g[0], g[1]); if (el) box.appendChild(el);
+    });
+    var block = document.getElementById('tag-block');
+    block.textContent = r.block;
+    block.setAttribute('data-plain', r.block);
+    document.getElementById('tag-meta').textContent =
+      r.all.length + ' hashtags · ' + r.block.length + ' characters. Rotate the niche set per product.';
+    document.getElementById('tag-result').classList.add('show');
+  });
+})();
+</script>
+</body>
+</html>
