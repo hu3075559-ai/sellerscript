@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TikTok Shop Banned Words Checker — Scan Titles & Scripts for Risky Claims | SellerScript</title>
+<meta name="description" content="Paste your TikTok Shop title, description or video script and get risky words highlighted: superlatives, medical claims, fake urgency and unverifiable promises — with a safer rewrite for each.">
+<link rel="canonical" href="https://sellerscript.pages.dev/banned-words-checker/">
+<meta property="og:title" content="TikTok Shop Banned Words Checker | SellerScript">
+<meta property="og:description" content="Highlight risky claims in your TikTok Shop copy before you publish — with the reason and a safer alternative for each flag.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sellerscript.pages.dev/banned-words-checker/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"TikTok Shop Banned Words Checker","url":"https://sellerscript.pages.dev/banned-words-checker/","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Scans TikTok Shop copy for risky words and claims based on public marketplace advertising policy patterns, with safer alternatives."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Which words get TikTok Shop listings in trouble?","acceptedAnswer":{"@type":"Answer","text":"The repeat offenders are unverifiable superlatives (best, cheapest, #1), medical or treatment claims for ordinary products (cure, heal, lose 10 lbs), fake urgency (only today, selling out fast when it is not), income promises, and authority claims you cannot prove (clinically proven, officially approved). This checker is built around those patterns."}},
+{"@type":"Question","name":"Does a clean scan mean my listing is compliant?","acceptedAnswer":{"@type":"Answer","text":"No. Policies differ by country and product category and change over time, and review also looks at images, video and landing pages. Treat a clean scan as a first pass only, and always check the current TikTok Shop policy centre for your category."}},
+{"@type":"Question","name":"Is my pasted text uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. The checker runs entirely in your browser against a built-in rule library. Your copy never leaves your device."}}]}
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="/">Seller<span>Script</span></a>
+  <nav class="main">
+    <a href="/script-generator/">Script Generator</a>
+    <a href="/title-optimizer/">Title Optimizer</a>
+    <a href="/hashtag-generator/">Hashtags</a>
+    <a class="on" href="/banned-words-checker/">Banned Words</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <section class="block">
+    <div class="kicker">Tool 4 · Pre-publish scan</div>
+    <h2 style="font-size:32px">TikTok Shop Banned Words Checker</h2>
+    <p style="color:var(--muted);max-width:680px">Paste a product title, description or video script. Risky patterns — superlatives, medical claims, fake urgency, unverifiable promises — get highlighted with the reason and a safer way to say it. Everything runs in your browser; your copy is never uploaded.</p>
+
+    <div class="card">
+      <form class="tool" id="ban-form">
+        <label for="b-text">Your copy</label>
+        <textarea id="b-text" placeholder="Paste your title, description or script here…"></textarea>
+        <button class="btn" type="submit">Scan copy</button>
+      </form>
+
+      <div class="result" id="ban-result">
+        <p class="meta-line" id="ban-summary" style="font-size:15px"></p>
+        <div class="highlight-box" id="ban-highlight"></div>
+        <div id="ban-findings"></div>
+      </div>
+      <p class="disclaimer">Reference only, based on common public marketplace advertising-policy patterns. This is not legal or compliance advice and does not guarantee approval — always verify against the current TikTok Shop policy centre for your country and category.</p>
+    </div>
+  </section>
+
+  <div class="subscribe">
+    <h2>Get Pro when it launches</h2>
+    <p>Deeper scans (images and full listings), category-specific rule packs and policy-change alerts. One email at launch.</p>
+    <form class="subscribe" data-source="pro-waitlist-banned">
+      <input type="email" required placeholder="you@yourstore.com" aria-label="Email address">
+      <input class="hp" type="text" name="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn" type="submit">Join the waitlist</button>
+      <div class="sub-msg" role="status"></div>
+    </form>
+  </div>
+
+  <section class="block faq">
+    <h2>FAQ</h2>
+    <details><summary>Which words get listings in trouble?</summary><p>Unverifiable superlatives (best, cheapest, #1), medical claims for ordinary products (cure, heal, lose 10 lbs), fake urgency (only today, selling out fast), income promises, and proof claims you cannot back up (clinically proven, officially approved).</p></details>
+    <details><summary>Does a clean scan mean I am compliant?</summary><p>No. Policies vary by country and category and change over time, and review also covers images and video. Treat this as a first pass and check the TikTok Shop policy centre for your category.</p></details>
+    <details><summary>Is my text uploaded?</summary><p>No. The scan runs fully in your browser against a built-in rule library.</p></details>
+  </section>
+</main>
+
+<footer class="site"><div class="wrap">
+  <span>© 2026 SellerScript</span>
+  <a href="/">All tools</a><a href="/script-generator/">Script Generator</a>
+  <a href="/title-optimizer/">Title Optimizer</a><a href="/hashtag-generator/">Hashtag Generator</a>
+</div>
+<div class="wrap disclaimer">Independent tool site, not affiliated with TikTok or TikTok Shop. Guidance only — not legal or compliance advice.</div>
+</footer>
+<script src="/assets/tools.js"></script>
+<script src="/assets/site.js"></script>
+<script>
+(function () {
+  document.getElementById('ban-form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var text = document.getElementById('b-text').value;
+    var box = document.getElementById('ban-result');
+    if (!text.trim()) {
+      document.getElementById('ban-summary').textContent = 'Paste some copy first.';
+      box.classList.add('show');
+      return;
+    }
+    var r = SSEngines.bannedCheck(text);
+    var summary = document.getElementById('ban-summary');
+    if (r.total === 0) {
+      summary.textContent = '✓ No risky patterns found in this pass. Remember: this is a first-pass check, not a compliance guarantee.';
+    } else {
+      summary.textContent = '⚠ ' + r.total + ' risky hit' + (r.total > 1 ? 's' : '') +
+        ' across ' + r.findings.length + ' pattern' + (r.findings.length > 1 ? 's' : '') + ' — review each one below.';
+    }
+    document.getElementById('ban-highlight').innerHTML = SSEngines.bannedHighlight(text, r) || '';
+    var list = document.getElementById('ban-findings');
+    list.innerHTML = '';
+    r.findings.forEach(function (f) {
+      var d = document.createElement('div'); d.className = 'finding';
+      var b = document.createElement('b');
+      b.textContent = '"' + f.term + '" · ' + f.cat + ' · ' + f.hits.length + ' hit' + (f.hits.length > 1 ? 's' : '');
+      var p = document.createElement('p'); p.textContent = f.why;
+      var a = document.createElement('p'); a.className = 'alt'; a.textContent = 'Safer: ' + f.alt;
+      d.appendChild(b); d.appendChild(p); d.appendChild(a); list.appendChild(d);
+    });
+    box.classList.add('show');
+  });
+})();
+</script>
+</body>
+</html>
