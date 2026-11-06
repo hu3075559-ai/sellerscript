@@ -11,3 +11,5 @@ Free tools for TikTok Shop sellers — v1 (2026-11-06).
 - Lead capture: every page carries a Pro waitlist form posting to the shared
   leads-api (`https://lunasign.me/api/leads`) with `site: "sellerscript"`.
 - No revenue in v1 by design; Pro tier is the planned monetization.
+
+Deploy trigger: initial Pages deployment 2026-11-06.
