@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TikTok Shop Video Script Generator — 15s & 30s Sales Scripts | SellerScript</title>
+<meta name="description" content="Generate a TikTok Shop product video script in seconds: hook, pain point, demo and offer structure for 15-second and 30-second videos. Free, no sign-up.">
+<link rel="canonical" href="https://sellerscript.pages.dev/script-generator/">
+<meta property="og:title" content="TikTok Shop Video Script Generator | SellerScript">
+<meta property="og:description" content="Timed sales scripts (hook → pain → demo → CTA) for 15s and 30s TikTok Shop videos. Free and instant.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sellerscript.pages.dev/script-generator/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"TikTok Shop Video Script Generator","url":"https://sellerscript.pages.dev/script-generator/","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Generates timed short-video sales scripts for TikTok Shop products from proven selling templates."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How long should a TikTok Shop sales script be?","acceptedAnswer":{"@type":"Answer","text":"At a natural speaking pace of roughly 150 words per minute, a 15-second video needs about 35–45 spoken words and a 30-second video about 75–90. The generator shows the word count and estimated speaking time for every script so you can trim before filming."}},
+{"@type":"Question","name":"What structure do converting TikTok Shop videos use?","acceptedAnswer":{"@type":"Answer","text":"A repeatable four-beat structure: a hook in the first 3 seconds, the buyer's pain point, a real demonstration, then the offer with a clear call to action pointing at the product link. The generator follows exactly this structure."}},
+{"@type":"Question","name":"Can I regenerate a different version?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every click on New variation recombines hooks, pain lines, demos and calls to action from the template library, so you can generate several takes and film the one that fits your style."}}]}
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="/">Seller<span>Script</span></a>
+  <nav class="main">
+    <a class="on" href="/script-generator/">Script Generator</a>
+    <a href="/title-optimizer/">Title Optimizer</a>
+    <a href="/hashtag-generator/">Hashtags</a>
+    <a href="/banned-words-checker/">Banned Words</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <section class="block">
+    <div class="kicker">Tool 1 · Video selling</div>
+    <h2 style="font-size:32px">TikTok Shop Video Script Generator</h2>
+    <p style="color:var(--muted);max-width:680px">Pick your category, drop in your product facts, and get a timed script built on the hook → pain → demo → offer structure used by selling videos. Generate variations until one sounds like you.</p>
+
+    <div class="card">
+      <form class="tool" id="script-form">
+        <div class="row">
+          <div>
+            <label for="f-cat">Product category</label>
+            <select id="f-cat"></select>
+          </div>
+          <div>
+            <label for="f-dur">Video length</label>
+            <select id="f-dur">
+              <option value="15">15 seconds (fast pitch)</option>
+              <option value="30" selected>30 seconds (full pitch)</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="f-product">Product name</label>
+            <input type="text" id="f-product" placeholder="e.g. mini humidifier" required>
+          </div>
+          <div>
+            <label for="f-price">Price / offer headline</label>
+            <input type="text" id="f-price" placeholder="e.g. $12.99">
+          </div>
+        </div>
+        <label for="f-benefit">Key benefit (one line)</label>
+        <input type="text" id="f-benefit" placeholder="e.g. it folds flat and fits in a drawer">
+        <div class="row">
+          <div>
+            <label for="f-offer">Extra offer (optional)</label>
+            <input type="text" id="f-offer" placeholder="e.g. extra 20% off with code GLOW20">
+          </div>
+          <div>
+            <label for="f-aud">Target audience (optional)</label>
+            <input type="text" id="f-aud" placeholder="e.g. busy mums, students in dorms">
+          </div>
+        </div>
+        <button class="btn" type="submit">Generate script</button>
+        <button class="btn ghost" type="button" id="btn-variation" style="display:none">New variation</button>
+      </form>
+
+      <div class="result" id="script-result">
+        <div id="script-segs"></div>
+        <div class="meta-line" id="script-meta"></div>
+        <h4 style="margin:18px 0 6px">Full script (read straight to camera)</h4>
+        <pre class="copybox" id="script-full"></pre>
+        <button class="btn small" data-copy-target="script-full">Copy full script</button>
+        <p class="meta-line">Next step: paste this script into the <a href="/banned-words-checker/">banned words checker</a> before you film, and grab <a href="/hashtag-generator/">hashtags</a> for the caption.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="subscribe">
+    <h2>Get Pro when it launches</h2>
+    <p>Batch scripts for your whole catalogue, saved voices and tones, trend hooks by category. One email at launch.</p>
+    <form class="subscribe" data-source="pro-waitlist-script">
+      <input type="email" required placeholder="you@yourstore.com" aria-label="Email address">
+      <input class="hp" type="text" name="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn" type="submit">Join the waitlist</button>
+      <div class="sub-msg" role="status"></div>
+    </form>
+  </div>
+
+  <section class="block faq">
+    <h2>FAQ</h2>
+    <details><summary>How long should a TikTok Shop sales script be?</summary><p>At ~150 spoken words per minute, 15 seconds needs about 35–45 words and 30 seconds about 75–90. Every generated script shows its word count and estimated speaking time.</p></details>
+    <details><summary>What structure do converting videos use?</summary><p>Hook in the first 3 seconds, the buyer's pain, a real demo, then the offer with a clear call to action. That is exactly the structure this generator follows.</p></details>
+    <details><summary>Can I get a different version?</summary><p>Yes — "New variation" recombines hooks, pain lines, demos and CTAs from the template library. Generate a few takes and film the one that fits you.</p></details>
+  </section>
+</main>
+
+<footer class="site"><div class="wrap">
+  <span>© 2026 SellerScript</span>
+  <a href="/">All tools</a><a href="/title-optimizer/">Title Optimizer</a>
+  <a href="/hashtag-generator/">Hashtag Generator</a><a href="/banned-words-checker/">Banned Words Checker</a>
+</div>
+<div class="wrap disclaimer">Independent tool site, not affiliated with TikTok or TikTok Shop. Scripts are starting points — read them in your own voice and verify claims against the current TikTok Shop policy centre.</div>
+</footer>
+<script src="/assets/tools.js"></script>
+<script src="/assets/site.js"></script>
+<script>
+(function () {
+  var catSel = document.getElementById('f-cat');
+  Object.keys(SSEngines.CATEGORIES).forEach(function (k) {
+    var o = document.createElement('option');
+    o.value = k; o.textContent = SSEngines.CATEGORIES[k].label;
+    catSel.appendChild(o);
+  });
+  var variant = 0, lastInput = null;
+  function read() {
+    return {
+      category: catSel.value,
+      duration: document.getElementById('f-dur').value,
+      product: document.getElementById('f-product').value.trim(),
+      price: document.getElementById('f-price').value.trim(),
+      benefit: document.getElementById('f-benefit').value.trim(),
+      offer: document.getElementById('f-offer').value.trim(),
+      audience: document.getElementById('f-aud').value.trim()
+    };
+  }
+  function render() {
+    var r = SSEngines.scriptGenerate(lastInput, variant);
+    var box = document.getElementById('script-segs');
+    box.innerHTML = '';
+    r.segments.forEach(function (s) {
+      var d = document.createElement('div'); d.className = 'seg';
+      var b = document.createElement('b'); b.textContent = s.label;
+      var p = document.createElement('span'); p.textContent = s.text;
+      d.appendChild(b); d.appendChild(p); box.appendChild(d);
+    });
+    var full = document.getElementById('script-full');
+    full.textContent = r.fullText;
+    full.setAttribute('data-plain', r.fullText);
+    document.getElementById('script-meta').textContent =
+      r.words + ' words · ≈' + r.seconds + 's speaking time · variation #' + (variant + 1);
+    document.getElementById('script-result').classList.add('show');
+    document.getElementById('btn-variation').style.display = 'inline-block';
+  }
+  document.getElementById('script-form').addEventListener('submit', function (ev) {
+    ev.preventDefault(); lastInput = read(); variant = 0; render();
+  });
+  document.getElementById('btn-variation').addEventListener('click', function () {
+    if (!lastInput) return; variant++; render();
+  });
+})();
+</script>
+</body>
+</html>
