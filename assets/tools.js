@@ -68,7 +68,7 @@
         'the build up close: metal hinge, solid click, nothing rattles'
       ],
       tagsMid: ['#gadgets', '#techtok', '#techfinds', '#gadgetreview', '#coolgadgets'],
-      tagsNiche: ['#desksSetup', '#edcgear', '#techunboxing', '#budgettech', '#workfromhometools']
+      tagsNiche: ['#desksetup', '#edcgear', '#techunboxing', '#budgettech', '#workfromhometools']
     },
     fitness: {
       label: 'Fitness & Outdoors',
@@ -100,7 +100,7 @@
         'three packs, three flavours, my honest ranking at the end'
       ],
       tagsMid: ['#foodtok', '#snackreview', '#foodfinds', '#tastetest', '#snacktok'],
-      tagsNiche: ['#healthysnacks', '#snackhaul', '#musttrysnacks', '#officenacks', '#snacktime']
+      tagsNiche: ['#healthysnacks', '#snackhaul', '#musttrysnacks', '#officesnacks', '#snacktime']
     },
     pets: {
       label: 'Pet Supplies',
