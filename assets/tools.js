@@ -187,7 +187,14 @@
 
   function estSeconds(words) { return Math.round(words / 2.5); } // ~150 wpm spoken
 
-  function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+  function cap(s) {
+    if (!s) return s;
+    // Preserve existing capitalisation inside the first word (iPhone,
+    // TikTok, eBay stay intact): only capitalise an all-lowercase first word.
+    var firstWord = s.split(/\s/, 1)[0];
+    if (/[A-Z]/.test(firstWord)) return s;
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
 
   /* ---------------- 1. script generator ---------------- */
 
@@ -245,7 +252,7 @@
       demo: pick(cat.demos, variant + 1),
       offerClause: input.offer ? ' — ' + input.offer : ''
     };
-    var segs = [];
+    var rawSegs = [];
     var hook = fill(pick(HOOKS, variant * 3 + 1), v);
     var benefitSentence = '';
     if (v.benefit) {
@@ -253,18 +260,38 @@
       if (input.duration === '15' && wordCount(v.benefit) > 8) benefitSentence = '';
     }
     if (input.duration === '15') {
-      segs.push({ label: 'Hook · 0–3s', text: hook });
-      segs.push({ label: 'Demo · 3–10s', text: cap(fill('So {demo}.', v)) + benefitSentence });
-      segs.push({ label: 'Offer + CTA · 10–15s', text: fill(pick(CTA_SHORT, variant), v) });
+      rawSegs.push({ name: 'Hook', text: hook });
+      rawSegs.push({ name: 'Demo', text: cap(fill('So {demo}.', v)) + benefitSentence });
+      rawSegs.push({ name: 'Offer + CTA', text: fill(pick(CTA_SHORT, variant), v) });
     } else {
-      segs.push({ label: 'Hook · 0–3s', text: hook });
-      segs.push({ label: 'Pain · 3–8s', text: fill(pick(PAIN_LINES, variant), v) });
-      segs.push({ label: 'Demo · 8–20s', text: cap(fill('So {demo}.', v)) + benefitSentence });
-      segs.push({ label: 'Proof · 20–25s', text: fill(pick(PROOF_LINES, variant + 2), v) + (v.audience ? ' If you are ' + v.audience + ', this was made for you.' : '') });
-      segs.push({ label: 'Offer + CTA · 25–30s', text: fill(pick(CTAS, variant), v) });
+      rawSegs.push({ name: 'Hook', text: hook });
+      rawSegs.push({ name: 'Pain', text: fill(pick(PAIN_LINES, variant), v) });
+      rawSegs.push({ name: 'Demo', text: cap(fill('So {demo}.', v)) + benefitSentence });
+      rawSegs.push({ name: 'Proof', text: fill(pick(PROOF_LINES, variant + 2), v) + (v.audience ? ' Made for ' + v.audience + '.' : '') });
+      rawSegs.push({ name: 'Offer + CTA', text: fill(pick(CTAS, variant), v) });
     }
-    var full = segs.map(function (s) { return s.text; }).join(' ');
-    return { segments: segs, fullText: full, words: wordCount(full), seconds: estSeconds(wordCount(full)) };
+    var full = rawSegs.map(function (s) { return s.text; }).join(' ');
+    var totalWords = wordCount(full);
+    var totalSecs = estSeconds(totalWords);
+    // Allocate the on-screen timeline by each segment's share of the word
+    // count, so the timeline always adds up to the estimated speaking time
+    // shown next to it (instead of a fixed 15s/30s grid the words overrun).
+    var segs = [], elapsed = 0, cumWords = 0;
+    rawSegs.forEach(function (s, i) {
+      var end;
+      if (i === rawSegs.length - 1) {
+        end = totalSecs;
+      } else {
+        cumWords += wordCount(s.text);
+        end = Math.round(totalSecs * cumWords / Math.max(totalWords, 1));
+        var maxEnd = totalSecs - (rawSegs.length - 1 - i);
+        if (end > maxEnd) end = maxEnd;
+        if (end <= elapsed) end = elapsed + 1;
+      }
+      segs.push({ label: s.name + ' · ' + elapsed + '–' + end + 's', text: s.text });
+      elapsed = end;
+    });
+    return { segments: segs, fullText: full, words: totalWords, seconds: totalSecs };
   }
 
   /* ---------------- 2. title optimizer ---------------- */
@@ -336,15 +363,15 @@
 
   var BANNED_RULES = [
     { re: /\bguarantee(d|s)?\b/gi, term: 'guaranteed', cat: 'Unverifiable promises', why: 'Outcome guarantees are treated as deceptive claims on most marketplaces.', alt: 'Describe what the product does, not a promised result.' },
-    { re: /\b100%\s?(effective|safe|natural|guaranteed|works)\b/gi, term: '100% …', cat: 'Unverifiable promises', why: 'Absolute percentage claims cannot be substantiated.', alt: 'Use a specific, checkable fact instead.' },
+    { re: /\b100%(\s?[a-z][a-z-]*)?/gi, term: '100% …', cat: 'Unverifiable promises', why: 'Absolute "100%" claims read as unverifiable promises, unless they state a checkable fact (e.g. a fibre content taken from the label).', alt: 'Use a specific, checkable fact instead.' },
     { re: /\bmiracle\b/gi, term: 'miracle', cat: 'Exaggerated claims', why: 'Miracle claims are a classic flagged pattern in ad review.', alt: 'Say what changed, in plain measurable terms.' },
     { re: /\b(best|cheapest|lowest price|number one|#1|no\.?\s?1)\b/gi, term: 'best / cheapest / #1', cat: 'Superlatives', why: 'Unranked superlatives ("best", "cheapest") need proof you likely cannot attach.', alt: 'Use a concrete differentiator: size, material, speed, bundle.' },
     { re: /\bperfect(ion)?\b|\bflawless\b/gi, term: 'perfect / flawless', cat: 'Superlatives', why: 'Perfection claims overstate results and trigger manual review.', alt: 'Show a close-up demo and let viewers judge.' },
     { re: /\bcure(s|d)?\b|\bheal(s|ed|ing)?\b|\btreat(s|ing)?\s+(acne|eczema|pain|disease)/gi, term: 'cure / heal / treat', cat: 'Medical claims', why: 'Non-drug products cannot claim to cure, heal or treat conditions.', alt: 'Talk about routine and feel, not treatment.' },
-    { re: /\blose\s+\d+\s?(lbs|kg|pounds|kilos)\b|\bweight\s?loss\s+guarantee/gi, term: 'lose X lbs', cat: 'Medical claims', why: 'Specific weight-loss promises are prohibited for most product types.', alt: 'Share your routine, not a promised number.' },
+    { re: /\blose\s+\d+\s?(lbs|kg|pounds|kilos)\b/gi, term: 'lose X lbs', cat: 'Medical claims', why: 'Specific weight-loss promises are prohibited for most product types.', alt: 'Share your routine, not a promised number.' },
     { re: /\banti-?aging\s+guarantee|\berase\s+wrinkles|\bwrinkle-?free\s+skin\b/gi, term: 'erase wrinkles', cat: 'Medical claims', why: 'Reversal claims for cosmetics are treated as drug claims.', alt: 'Use appearance language: "skin looks smoother".' },
     { re: /\bclinically\s+proven\b|\bdoctor\s+recommended\b|\bdermatologist\s+approved\b/gi, term: 'clinically proven / doctor recommended', cat: 'Unverifiable proof', why: 'Only usable with real studies/endorsements you can produce on request.', alt: 'Name the actual test or ingredient standard instead.' },
-    { re: /\bfree\b(?!\s+shipping)/gi, term: 'free (not shipping)', cat: 'Misleading pricing', why: '"Free" on a paid product reads as a pricing trick and draws complaints.', alt: 'Say exactly what is included: "bonus X included".' },
+    { re: /(?<![\w-])free\b(?!\s+shipping)/gi, term: 'free (not shipping)', cat: 'Misleading pricing', why: '"Free" on a paid product reads as a pricing trick and draws complaints.', alt: 'Say exactly what is included: "bonus X included".' },
     { re: /\bonly\s+today\b|\blast\s+chance\b|\bends\s+tonight\b|\bact\s+now\b/gi, term: 'only today / last chance', cat: 'Fake urgency', why: 'If the offer does not really end, countdown pressure counts as deceptive.', alt: 'Use the real promotion end date, or drop the urgency.' },
     { re: /\bselling\s+out\s+fast\b|\balmost\s+gone\b|\blimited\s+stock\b/gi, term: 'selling out fast', cat: 'Fake urgency', why: 'Scarcity claims must match real inventory.', alt: 'Show real stock or restock info if you mention it at all.' },
     { re: /\bget\s+rich\b|\bmake\s+money\s+fast\b|\bpassive\s+income\s+guarantee|\bfinancial\s+freedom\s+in\b/gi, term: 'get rich / make money fast', cat: 'Income claims', why: 'Income promises are banned in marketplace ads, full stop.', alt: 'Sell the tool or the process, never the income.' },
@@ -354,7 +381,13 @@
     { re: /\binstant(ly)?\s+(results|cure|relief)\b|\bovernight\s+results\b/gi, term: 'instant results', cat: 'Exaggerated claims', why: 'Instant-result promises are a top rejection reason in ad review.', alt: 'Give a realistic timeframe from your own use.' },
     { re: /\bsafe\s+for\s+everyone\b|\bno\s+side\s+effects\b/gi, term: 'no side effects', cat: 'Medical claims', why: 'Safety absolutes for anything applied to the body are high-risk.', alt: 'List ingredients/materials and who it is designed for.' },
     { re: /\bapproved\s+by\b|\bofficial\b/gi, term: 'approved by / official', cat: 'False authority', why: 'Implying platform or regulator endorsement you do not have is deceptive.', alt: 'Remove, or name the real certification with its scope.' },
-    { re: /\bdiscount\s+up\s+to\s+\d+%/gi, term: 'discount up to X%', cat: 'Misleading pricing', why: '"Up to" discounts must apply to a real share of the range.', alt: 'State the exact discount on this product.' }
+    { re: /\bdiscount\s+up\s+to\s+\d+%/gi, term: 'discount up to X%', cat: 'Misleading pricing', why: '"Up to" discounts must apply to a real share of the range.', alt: 'State the exact discount on this product.' },
+    { re: /\bFDA[-\s]?(approved|certified)\b|\bFDA\s+approval\b/gi, term: 'FDA approved', cat: 'False authority', why: 'Claiming FDA approval or certification for a product the FDA has not approved is a top takedown reason in beauty, supplements and health gadgets.', alt: 'Drop the FDA claim, or name the actual registration that applies to your product.' },
+    { re: /\blose\s+weight\b|\bweight\s?loss\b|\bburn\s+fat\b|\bfat[-\s]?burn(ing|er)?\b|\bslim\s+down\b|\bslimming\b/gi, term: 'lose weight / burn fat', cat: 'Medical claims', why: 'Weight-loss effect claims are restricted even without a specific number attached.', alt: 'Share your routine and habits, not a promised body change.' },
+    { re: /\bdetox(ify|ifying|ification)?\b/gi, term: 'detox', cat: 'Medical claims', why: '"Detox" implies the product cleanses the body — a medical effect ordinary products cannot claim.', alt: 'Describe the ingredients and how the product fits your routine.' },
+    { re: /\banti-?bacterial\b|\beliminates\s+(bacteria|germs|viruses)\b|\bkills\s+(?:99\.9%|99%|bacteria\b|germs\b|viruses\b)/gi, term: 'antibacterial / kills 99.9%', cat: 'Medical claims', why: 'Antimicrobial kill claims need registered disinfectant status and lab proof in most markets.', alt: 'Say "helps keep surfaces clean" and point to the ingredient list.' },
+    { re: /\bonly\s+\d+\s+left\b/gi, term: 'only X left', cat: 'Fake urgency', why: 'Exact stock-count pressure must match real, current inventory.', alt: 'Show the real stock level from your listing, or drop the count.' },
+    { re: /\blimited[-\s]time\b/gi, term: 'limited time', cat: 'Fake urgency', why: '"Limited time" with no real end date counts as deceptive urgency.', alt: 'State the actual promotion end date.' }
   ];
 
   function bannedCheck(text) {
@@ -371,7 +404,13 @@
       }
     });
     var total = findings.reduce(function (n, f) { return n + f.hits.length; }, 0);
-    return { findings: findings, total: total };
+    // Non-English guard: the rule library only covers English copy. If the
+    // text is mostly CJK, flag it so the page can say so instead of
+    // returning a false "clean" pass for text it cannot judge.
+    var cjk = (text.match(/[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uac00-\ud7af]/g) || []).length;
+    var latin = (text.match(/[A-Za-z]/g) || []).length;
+    var nonEnglish = cjk >= 8 && cjk >= latin;
+    return { findings: findings, total: total, nonEnglish: nonEnglish };
   }
 
   function escapeHtml(s) {
