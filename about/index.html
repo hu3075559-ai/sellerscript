@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About SellerScript — Free Template Tools for TikTok Shop Sellers</title>
+<meta name="description" content="SellerScript is an independent tool site for TikTok Shop sellers: four free tools built on selling templates and policy rule libraries — no AI, no uploads, no sign-up.">
+<link rel="canonical" href="https://sellerscript.pages.dev/about/">
+<meta property="og:title" content="About SellerScript">
+<meta property="og:description" content="Free template-based tools for TikTok Shop sellers, run by the SellerScript team. Scripts, titles, hashtags and a risky-words checker.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sellerscript.pages.dev/about/">
+<meta property="og:image" content="https://sellerscript.pages.dev/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sellerscript.pages.dev/og-image.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CG8J72909Z"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-CG8J72909Z');
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="/">Seller<span>Script</span></a>
+  <nav class="main">
+    <a href="/script-generator/">Script Generator</a>
+    <a href="/title-optimizer/">Title Optimizer</a>
+    <a href="/hashtag-generator/">Hashtags</a>
+    <a href="/banned-words-checker/">Banned Words</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <section class="block prose">
+    <div class="kicker">About</div>
+    <h1 style="font-size:32px">About SellerScript</h1>
+
+    <h3>What this is</h3>
+    <p>SellerScript is a small, independent tool site for TikTok Shop sellers. It offers four free tools — a <a href="/script-generator/">video script generator</a>, a <a href="/title-optimizer/">product title optimizer</a>, a <a href="/hashtag-generator/">hashtag generator</a> and a <a href="/banned-words-checker/">banned-words checker</a> — built to cover the repetitive copy work around listing and posting: the script before you film, the title before you publish, the tags and the risk scan before you post.</p>
+
+    <h3>Who runs it</h3>
+    <p>The site is built and maintained by the SellerScript team, an independent tools project. It is not a TikTok product and is not affiliated with TikTok or TikTok Shop in any way. A Pro tier (saved templates, batch tools, deeper policy scans) is in preparation — the waitlist on any page is how we will announce it.</p>
+
+    <h3>How the tools work</h3>
+    <p>There is no AI behind the tools, and nothing you type is uploaded. Each tool is a template or rule engine that runs entirely in your browser: the script generator assembles proven selling structures (hook → pain → demo → offer) around your product facts; the banned-words checker matches your copy against a built-in library of risky-claim patterns drawn from public marketplace advertising policy. That design is deliberate — results are instant, free to run, and your draft listings stay on your device. It also means outputs are starting points, not guarantees: always check the current TikTok Shop policy centre for your country and category before publishing.</p>
+
+    <h3>Contact us</h3>
+    <p>Questions, corrections to the word library, or a request to delete your waitlist email — send a message here and we will reply by email. Messages go to the same database as the waitlist; see the <a href="/privacy/">Privacy Policy</a> for how that data is handled.</p>
+
+    <div class="card" style="margin-top:16px">
+      <form class="tool" id="contact-form">
+        <div class="row">
+          <div>
+            <label for="c-name">Your name (optional)</label>
+            <input type="text" id="c-name" placeholder="e.g. Alex">
+          </div>
+          <div>
+            <label for="c-email">Email (so we can reply)</label>
+            <input type="email" id="c-email" required placeholder="you@yourstore.com">
+          </div>
+        </div>
+        <label for="c-msg">Message</label>
+        <textarea id="c-msg" required placeholder="How can we help?"></textarea>
+        <input class="hp" type="text" name="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn" type="submit">Send message</button>
+        <div class="sub-msg" id="c-status" role="status" style="color:var(--muted)"></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site"><div class="wrap">
+  <span>© 2026 SellerScript</span>
+  <a href="/about/">About</a><a href="/privacy/">Privacy</a>
+  <a href="/">All tools</a><a href="/script-generator/">Script Generator</a>
+  <a href="/title-optimizer/">Title Optimizer</a><a href="/hashtag-generator/">Hashtag Generator</a>
+</div>
+<div class="wrap disclaimer">Independent tool site, not affiliated with TikTok or TikTok Shop. Guidance only — not legal or compliance advice.</div>
+</footer>
+<script src="/assets/site.js"></script>
+<script>
+(function () {
+  var form = document.getElementById('contact-form');
+  var status = document.getElementById('c-status');
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var name = document.getElementById('c-name').value.trim();
+    var email = document.getElementById('c-email').value.trim();
+    var msg = document.getElementById('c-msg').value.trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      status.textContent = 'Please enter a valid email address so we can reply.';
+      return;
+    }
+    if (!msg) { status.textContent = 'Please write a message first.'; return; }
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    status.textContent = 'Sending…';
+    var note = ('name: ' + (name || '-') + ' | ' + msg).slice(0, 480);
+    fetch('https://lunasign.me/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ site: 'sellerscript', email: email, source: 'contact', note: note, hp: form.querySelector('input[name="hp"]').value })
+    }).then(function (r) { return r.json(); }).then(function (data) {
+      if (data && data.ok) {
+        status.textContent = 'Message received — thanks for writing. We reply by email.';
+        form.reset();
+      } else {
+        status.textContent = 'Something went wrong (' + ((data && data.error) || 'unknown') + '). Please try again.';
+      }
+    }).catch(function () {
+      status.textContent = 'Network error — please try again in a moment.';
+    }).finally(function () { btn.disabled = false; });
+  });
+})();
+</script>
+</body>
+</html>
