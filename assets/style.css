@@ -28,11 +28,13 @@ nav.main a.on{color:var(--pink)}
 .toolcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
   padding:22px;display:block;color:var(--ink)}
 .toolcard:hover{border-color:var(--pink);text-decoration:none;box-shadow:0 6px 22px rgba(254,44,85,.08)}
-.toolcard .ico{font-size:28px}
+.toolcard .ico{font-size:28px;color:var(--pink)}
+.toolcard .ico svg{display:block}
 .toolcard h3{margin:10px 0 6px;font-size:18px}
 .toolcard p{margin:0;color:var(--muted);font-size:14.5px}
 section.block{padding:26px 0}
 section.block h2{font-size:26px;margin:0 0 12px;letter-spacing:-.3px}
+section.block h1{font-size:26px;margin:0 0 12px;letter-spacing:-.3px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
 form.tool label{display:block;font-weight:600;font-size:14px;margin:14px 0 5px}
 form.tool input[type=text],form.tool input[type=email],form.tool select,form.tool textarea{
@@ -84,6 +86,10 @@ pre.copybox{background:#161823;color:#f2f2f7;border-radius:10px;padding:14px 16p
 .subscribe .btn{margin-top:0;background:var(--pink)}
 .sub-msg{font-size:14px;margin-top:10px;min-height:20px}
 .sub-msg.ok{color:#7de8c3}.sub-msg.err{color:#ffb3c1}
+.subscribe .fineprint{font-size:12.5px;color:#9aa0b4;margin:12px 0 0}
+.subscribe .fineprint a{color:#c9ccda;text-decoration:underline}
+.prose p{color:var(--muted);max-width:720px}
+.prose h3{margin:20px 0 6px;font-size:17px}
 .hp{position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;overflow:hidden}
 footer.site{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--muted);font-size:13.5px;margin-top:20px}
 footer.site .wrap{display:flex;gap:18px;flex-wrap:wrap}
