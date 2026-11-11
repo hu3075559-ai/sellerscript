@@ -20,7 +20,7 @@
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"Which words get TikTok Shop listings in trouble?","acceptedAnswer":{"@type":"Answer","text":"The repeat offenders are unverifiable superlatives (best, cheapest, #1), medical or treatment claims for ordinary products (cure, heal, lose 10 lbs), fake urgency (only today, selling out fast when it is not), income promises, and authority claims you cannot prove (clinically proven, officially approved). This checker is built around those patterns."}},
+{"@type":"Question","name":"Which words get TikTok Shop listings in trouble?","acceptedAnswer":{"@type":"Answer","text":"The repeat offenders are unverifiable superlatives (best, cheapest, #1), medical or treatment claims for ordinary products (cure, heal, lose 10 lbs), fake urgency (only today, only 3 left, limited time, selling out fast when it is not), income promises, and authority claims you cannot prove (clinically proven, FDA approved). This checker is built around those patterns."}},
 {"@type":"Question","name":"Does a clean scan mean my listing is compliant?","acceptedAnswer":{"@type":"Answer","text":"No. Policies differ by country and product category and change over time, and review also looks at images, video and landing pages. Treat a clean scan as a first pass only, and always check the current TikTok Shop policy centre for your category."}},
 {"@type":"Question","name":"Is my pasted text uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. The checker runs entirely in your browser against a built-in rule library. Your copy never leaves your device."}}]}
 </script>
@@ -47,7 +47,7 @@ gtag('config', 'G-CG8J72909Z');
 <main class="wrap">
   <section class="block">
     <div class="kicker">Tool 4 · Pre-publish scan</div>
-    <h2 style="font-size:32px">TikTok Shop Banned Words Checker</h2>
+    <h1 style="font-size:32px">TikTok Shop Banned Words Checker</h1>
     <p style="color:var(--muted);max-width:680px">Paste a product title, description or video script. Risky patterns — superlatives, medical claims, fake urgency, unverifiable promises — get highlighted with the reason and a safer way to say it. Everything runs in your browser; your copy is never uploaded.</p>
 
     <div class="card">
@@ -75,18 +75,21 @@ gtag('config', 'G-CG8J72909Z');
       <button class="btn" type="submit">Join the waitlist</button>
       <div class="sub-msg" role="status"></div>
     </form>
+    <p class="fineprint">One launch email only, no spam — see our <a href="/privacy/">Privacy Policy</a>.</p>
   </div>
 
   <section class="block faq">
     <h2>FAQ</h2>
-    <details><summary>Which words get listings in trouble?</summary><p>Unverifiable superlatives (best, cheapest, #1), medical claims for ordinary products (cure, heal, lose 10 lbs), fake urgency (only today, selling out fast), income promises, and proof claims you cannot back up (clinically proven, officially approved).</p></details>
+    <details><summary>Which words get listings in trouble?</summary><p>Unverifiable superlatives (best, cheapest, #1), medical claims for ordinary products (cure, heal, lose weight, detox), fake urgency (only today, only 3 left, limited time, selling out fast), income promises, and proof claims you cannot back up (clinically proven, FDA approved).</p></details>
     <details><summary>Does a clean scan mean I am compliant?</summary><p>No. Policies vary by country and category and change over time, and review also covers images and video. Treat this as a first pass and check the TikTok Shop policy centre for your category.</p></details>
     <details><summary>Is my text uploaded?</summary><p>No. The scan runs fully in your browser against a built-in rule library.</p></details>
+    <details><summary>Does the checker work in other languages?</summary><p>Not yet — the rule library covers English-language listings. If you paste mostly non-English text, the checker says so instead of returning a misleading clean result.</p></details>
   </section>
 </main>
 
 <footer class="site"><div class="wrap">
   <span>© 2026 SellerScript</span>
+  <a href="/about/">About</a><a href="/privacy/">Privacy</a>
   <a href="/">All tools</a><a href="/script-generator/">Script Generator</a>
   <a href="/title-optimizer/">Title Optimizer</a><a href="/hashtag-generator/">Hashtag Generator</a>
 </div>
@@ -107,6 +110,13 @@ gtag('config', 'G-CG8J72909Z');
     }
     var r = SSEngines.bannedCheck(text);
     var summary = document.getElementById('ban-summary');
+    if (r.nonEnglish) {
+      summary.textContent = 'This checker only covers English-language listings — paste English copy to scan. Non-English text gets no result here, rather than a false "clean" pass.';
+      document.getElementById('ban-highlight').innerHTML = '';
+      document.getElementById('ban-findings').innerHTML = '';
+      box.classList.add('show');
+      return;
+    }
     if (r.total === 0) {
       summary.textContent = '✓ No risky patterns found in this pass. Remember: this is a first-pass check, not a compliance guarantee.';
     } else {
